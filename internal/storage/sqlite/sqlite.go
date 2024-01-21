@@ -73,7 +73,7 @@ func (s *Storage) GetURL(alias string) (string, error) {
 		return "", fmt.Errorf("%s: failed to get url by alias: %w", op, err)
 	}
 
-	var resURL fmt.String
+	var resURL string
 	err = stmt.QueryRow(alias).Scan(&resURL)
 
 	if err != nil {
