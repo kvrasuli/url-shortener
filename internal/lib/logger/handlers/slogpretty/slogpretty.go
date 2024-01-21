@@ -23,14 +23,14 @@ type PrettyHandler struct {
 
 func (opts PrettyHandlerOptions) NewPrettyHandler(
 	out io.Writer,
-	) *PrettyHandler {
+) *PrettyHandler {
 	h := &PrettyHandler{
 		Handler: slog.NewJSONHandler(out, opts.SlogOpts),
 		l:       stdLog.New(out, "", 0),
-		}
-
-		return h
 	}
+
+	return h
+}
 
 func (h *PrettyHandler) Handle(_ context.Context, r slog.Record) error {
 	level := r.Level.String() + ":"
@@ -38,12 +38,12 @@ func (h *PrettyHandler) Handle(_ context.Context, r slog.Record) error {
 	switch r.Level {
 	case slog.LevelDebug:
 		level = color.MagentaString(level)
-		case slog.LevelInfo:
-			level = color.BlueString(level)
-			case slog.LevelWarn:
-				level = color.YellowString(level)
-				case slog.LevelError:
-					level = color.RedString(level)
+	case slog.LevelInfo:
+		level = color.BlueString(level)
+	case slog.LevelWarn:
+		level = color.YellowString(level)
+	case slog.LevelError:
+		level = color.RedString(level)
 	}
 
 	fields := make(map[string]interface{}, r.NumAttrs())
@@ -76,7 +76,7 @@ func (h *PrettyHandler) Handle(_ context.Context, r slog.Record) error {
 		level,
 		msg,
 		color.WhiteString(string(b)),
-		)
+	)
 
 	return nil
 }
@@ -86,7 +86,7 @@ func (h *PrettyHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 		Handler: h.Handler,
 		l:       h.l,
 		attrs:   attrs,
-		}
+	}
 }
 
 func (h *PrettyHandler) WithGroup(name string) slog.Handler {
@@ -94,5 +94,5 @@ func (h *PrettyHandler) WithGroup(name string) slog.Handler {
 	return &PrettyHandler{
 		Handler: h.Handler.WithGroup(name),
 		l:       h.l,
-		}
+	}
 }

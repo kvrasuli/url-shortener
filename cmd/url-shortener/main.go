@@ -32,7 +32,7 @@ func main() {
 		log.Error("failed to init storage", sl.Err(err))
 		os.Exit(1)
 	}
-	
+
 	router := chi.NewRouter()
 	router.Use(middleware.RequestID)
 	router.Use(middleware.Logger)
@@ -45,11 +45,11 @@ func main() {
 	log.Info("string server", slog.String("address", cfg.HTTPServer.Address))
 
 	srv := &http.Server{
-		Addr: cfg.HTTPServer.Address,
-		Handler: router,
-		ReadTimeout: cfg.HTTPServer.Timeout,
+		Addr:         cfg.HTTPServer.Address,
+		Handler:      router,
+		ReadTimeout:  cfg.HTTPServer.Timeout,
 		WriteTimeout: cfg.HTTPServer.Timeout,
-		IdleTimeout: cfg.HTTPServer.IdleTimeout,
+		IdleTimeout:  cfg.HTTPServer.IdleTimeout,
 	}
 
 	if err := srv.ListenAndServe(); err != nil {
@@ -72,7 +72,6 @@ func setupLogger(env string) *slog.Logger {
 	}
 	return log
 }
-
 
 func setupPrettySLog() *slog.Logger {
 	opts := slogpretty.PrettyHandlerOptions{
